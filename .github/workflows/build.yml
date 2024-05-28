@@ -3,7 +3,7 @@ on:
  push:
 
 jobs:
-  runs-on:ubuntu-20.04
+  runs-on: ubuntu-22.04
    run:|
     sudo -E apt-get -y update
     sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
