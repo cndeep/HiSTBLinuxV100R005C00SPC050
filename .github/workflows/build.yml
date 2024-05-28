@@ -1,11 +1,17 @@
-name: build histb
+name: Compile release general kernel
+
 on:
- push:
+  repository_dispatch:
+  workflow_dispatch:
 
 jobs:
-  runs-on: ubuntu-22.04
-   run:|
-    sudo -E apt-get -y update
-    sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
-    sudo -E apt-get clean
-    echo "okokok"
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Initialization environment
+        id: init
+        run: |
+          sudo -E apt-get -y update
+          sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
+          echo "okokok"
