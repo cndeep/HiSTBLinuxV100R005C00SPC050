@@ -1,5 +1,6 @@
 name: build histb
-on:push
+on:
+  push:
 
 jobs:
   build:
@@ -29,5 +30,11 @@ jobs:
        id:compile
         if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
         run：|
-        echo “all ok”
+          ls -R /builder/out/hi3798mv310
+          tar -cvf hi3798mv310.tar /builder/out/hi3798mv310
+    - name: 'Upload Artifact'
+      uses: actions/release-action@main
+      with:
+        name: hi3798mv310
+        path: hi3798mv310.tar
         
