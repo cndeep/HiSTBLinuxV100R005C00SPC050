@@ -17,7 +17,7 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
       - name: make build
         id: build
-        working-directory: /builder
+        #working-directory: /builder
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
           mkdir -p /builder
