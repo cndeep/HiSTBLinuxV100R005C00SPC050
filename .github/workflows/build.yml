@@ -14,14 +14,13 @@ jobs:
         run: |
           sudo -E apt-get -y update
           sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma git
+          sudo mkdir -p /builder
           echo "status=success" >> ${GITHUB_OUTPUT}
       - name: make build
         id: build
-        #working-directory: /builder
+        working-directory: /builder
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
-          sudo mkdir -p /builder
-          sudo cd /builder
           git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv310
           cd mv310
           cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
