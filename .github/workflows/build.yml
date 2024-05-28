@@ -5,8 +5,8 @@ on:
 jobs:
   build:
     runs-on:ubuntu-20.04
-    
     steps:
+      - uses: action/yaml-lint@v1
       - name: Install dependencies
       id:install
       run：|
