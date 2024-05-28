@@ -27,5 +27,17 @@ jobs:
           cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
           source ./env.sh
           make build -j4 2>&1  | tee -a buildlog.txt
-          ls -R /builder/out/hi3798mv310
+          ls -R /builder/out/
+          tar -cvf hi3798mv310.tar /builder/out
           cho "status=success" >> ${GITHUB_OUTPUT}
+      - name: Upload Kernel to Release
+        id: tar
+        uses: ncipollo/release-action@main
+        if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
+        with:
+          tag: mv310_kernel
+          artifacts: /builder/hi3798mv310.tar
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            - 海思3798Mv310内核，32位。
