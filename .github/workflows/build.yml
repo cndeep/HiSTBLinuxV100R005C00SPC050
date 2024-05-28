@@ -1,4 +1,4 @@
-name: Compile release general kernel
+name: make mv310 kernel
 
 on:
   repository_dispatch:
