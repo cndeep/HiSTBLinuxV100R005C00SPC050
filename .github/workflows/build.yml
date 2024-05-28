@@ -27,8 +27,9 @@ jobs:
           cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
           source ./env.sh
           make build -j4 2>&1  | tee -a buildlog.txt
-          ls -R /builder/out/
-          tar -cvf hi3798mv310.tar /builder/out
+          ls -R /builder/mv310/out
+          tar -cvf hi3798mv310_image.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image
+          tar -cvf hi3798mv310_kernel.tar /builder/mv310/out
           cho "status=success" >> ${GITHUB_OUTPUT}
       - name: Upload Kernel to Release
         id: tar
@@ -36,7 +37,7 @@ jobs:
         if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
         with:
           tag: mv310_kernel
-          artifacts: /builder/hi3798mv310.tar
+          artifacts: /builder/hi3798mv310_image.tar,/builder/hi3798mv310_kernel.tar
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
