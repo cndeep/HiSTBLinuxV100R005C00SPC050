@@ -6,33 +6,10 @@ jobs:
  build:
   runs-on:ubuntu-20.04
   steps:
-  - name: Install dependencies
-  id:install
+   - name: Install dependencies
+   id:install
    run:|
-   sudo -E apt-get -y update
-   sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
-  sudo -E apt-get clean
-    echo "status=success" >> ${GITHUB_OUTPUT}
-  - name: make build
-   id:build
-   working-directory: /builder
-   if: ${{ steps.install.outputs.status }} == 'success' && !cancelled()
-   run:|
-    cd /builder
-    git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv310
-    cd mv310
-    cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
-    source ./env.sh
-    make build -j4 2>&1  | tee -a buildlog.txt
-    echo "status=success" >> ${GITHUB_OUTPUT}
-  - name: cp kernel
-   id:compile
-   if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
-   run:|
-    ls -R /builder/out/hi3798mv310
-    tar -cvf hi3798mv310.tar /builder/out/hi3798mv310
-  - name: 'Upload Artifact'
-   uses: actions/release-action@main
-   with:
-    name: hi3798mv310
-    path: hi3798mv310.tar
+    sudo -E apt-get -y update
+    sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma
+    sudo -E apt-get clean
+    echo "okokok"
