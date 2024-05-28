@@ -1,7 +1,5 @@
 name: build histb
-on:
-  repository_dispatch:
-  workflow_dispatch:
+on:push
 
 jobs:
   build:
