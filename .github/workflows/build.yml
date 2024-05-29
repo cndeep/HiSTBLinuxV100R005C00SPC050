@@ -26,7 +26,7 @@ jobs:
           cd mv310
           cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
           source ./env.sh
-          make build -j4 2>&1  | tee -a buildlog.txt
+          make linux -j4 2>&1  | tee -a buildlog.txt
           #ls -R /builder/mv310/out
           tar -cvf hi3798mv310_image.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image
           #tar -cvf hi3798mv310_kernel.tar /builder/mv310/out
