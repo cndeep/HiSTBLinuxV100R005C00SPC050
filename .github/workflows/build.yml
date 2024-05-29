@@ -26,7 +26,7 @@ jobs:
           cd mv310
           cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
           source ./env.sh
-          #make hiboot
+          make hiboot
           make linux -j4 2>&1  | tee -a buildlog.txt
           #ls -R /builder/mv310/out
           cp /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/emmc_image/fastboot.bin /builder/fastboot_hi3798mv31dmg.bin
