@@ -39,7 +39,7 @@ jobs:
         with:
           tag: mv310_kernel
           #artifacts: /builder/hi3798mv310_image.tar,/builder/hi3798mv310_kernel.tar
-          artifacts: /builder/hi3798mv310_kernel.tar
+          artifacts: /builder/mv310/hi3798mv310_kernel.tar
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
