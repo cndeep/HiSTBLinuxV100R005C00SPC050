@@ -24,12 +24,12 @@ jobs:
         run: |
           git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv310
           cd mv310
-          cp configs/hi3798mv310/hi3798mv31dmg_hi3798mv310_cfg.mak ./cfg.mak
+          cp configs/hi3798mv310/hi3798mv31dmd_hi3798mv310_cfg.mak ./cfg.mak
           source ./env.sh
           make hiboot
           make linux -j4 2>&1  | tee -a buildlog.txt
           #ls -R /builder/mv310/out
-          cp /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/emmc_image/fastboot.bin /builder/fastboot_hi3798mv31dmg.bin
+          cp /builder/mv310/out/hi3798mv310/hi3798mv31dmd/image/emmc_image/fastboot.bin /builder/fastboot_hi3798mv31dmd.bin
           #tar -cvf hi3798mv310_kernel.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/*
           echo "status=success" >> ${GITHUB_OUTPUT}
       - name: Upload Kernel to Release
@@ -39,7 +39,7 @@ jobs:
         with:
           tag: mv310_kernel
           #artifacts: /builder/hi3798mv310_image.tar,/builder/hi3798mv310_kernel.tar
-          artifacts: /builder/fastboot_hi3798mv31dmg.bin,/builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/emmc_image/hi_kernel.bin
+          artifacts: /builder/fastboot_hi3798mv31dmd.bin,/builder/mv310/out/hi3798mv310/hi3798mv31dmd/image/emmc_image/hi_kernel.bin
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
