@@ -31,11 +31,11 @@ jobs:
           #ls -R /builder/mv310/out
           #tar -cvfP hi3798mv310_image.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/*
           tar -cvf hi3798mv310_kernel.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/*
-          cho "status=success" >> ${GITHUB_OUTPUT}
+          echo "status=success" >> ${GITHUB_OUTPUT}
       - name: Upload Kernel to Release
         id: tar
         uses: ncipollo/release-action@main
-        #if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
+        if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
         with:
           tag: mv310_kernel
           #artifacts: /builder/hi3798mv310_image.tar,/builder/hi3798mv310_kernel.tar
