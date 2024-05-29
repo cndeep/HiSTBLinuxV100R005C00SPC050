@@ -30,7 +30,7 @@ jobs:
           #make linux -j4 2>&1  | tee -a buildlog.txt
           #ls -R /builder/mv310/out
           #tar -cvfP hi3798mv310_image.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/*
-          tar -cvf hi3798mv310_kernel.tar mv310/out/hi3798mv310/hi3798mv31dmg/image/*
+          tar -cvf hi3798mv310_kernel.tar /builder/mv310/out/hi3798mv310/hi3798mv31dmg/image/*
           cho "status=success" >> ${GITHUB_OUTPUT}
       - name: Upload Kernel to Release
         id: tar
