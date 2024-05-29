@@ -35,7 +35,7 @@ jobs:
       - name: Upload Kernel to Release
         id: tar
         uses: ncipollo/release-action@main
-        if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
+        #if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
         with:
           tag: mv310_kernel
           #artifacts: /builder/hi3798mv310_image.tar,/builder/hi3798mv310_kernel.tar
