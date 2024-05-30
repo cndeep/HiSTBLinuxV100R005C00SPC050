@@ -1,0 +1,43 @@
+name: make mv200 kernel
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Initialization environment
+        id: init
+        run: |
+          sudo -E apt-get -y update
+          sudo -E apt-get -y install gcc make gettext bison flex bc zlib1g-dev libncurses5-dev lzma git
+          sudo mkdir -p /builder
+          sudo chown -R runner.runner /builder
+          echo "status=success" >> ${GITHUB_OUTPUT}
+      - name: make build
+        id: build
+        working-directory: /builder
+        if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
+        run: |
+          git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv200
+          cd mv200
+          cp configs/hi3798mv200/hi3798mv2dmo_hi3798mv200_cfg.mak ./cfg.mak
+          source ./env.sh
+          make hiboot
+          make linux -j4 2>&1  | tee -a buildlog.txt
+          cp /builder/mv200/out/hi3798mv200/hi3798mv2dmo/image/emmc_image/fastboot.bin /builder/fastboot_hi3798mv2dmo.bin
+          echo "status=success" >> ${GITHUB_OUTPUT}
+      - name: Upload Kernel to Release
+        id: tar
+        uses: ncipollo/release-action@main
+        if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
+        with:
+          tag: mv200_kernel
+          artifacts: /builder/fastboot_hi3798mv2dmo.bin,/builder/mv200/out/hi3798mv200/hi3798mv2dmo/image/emmc_image/hi_kernel.bin
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            - 海思3798Mv200内核，调试阶段。
