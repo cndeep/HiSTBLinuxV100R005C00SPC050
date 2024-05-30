@@ -3,7 +3,27 @@ name: make mv200 kernel
 on:
   repository_dispatch:
   workflow_dispatch:
-
+    inputs:
+      set_chip_type:
+        description: "Select Chip Type."
+        required: false
+        default: "hi3798mv2dmo"
+        type: choice
+        options:
+          - hi3798mv2dma
+          - hi3798mv2dmb
+          - hi3798mv2dmc
+          - hi3798mv2dme
+          - hi3798mv2dmg
+          - hi3798mv2dmo
+      set_arch_type:
+        description: "Select arch type."
+        required: false
+        default: "arm64"
+        type: choice
+        options:
+          - arm
+          - arm64
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -24,11 +44,11 @@ jobs:
         run: |
           git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv200
           cd mv200
-          cp configs/hi3798mv200/hi3798mv2dmo_hi3798mv200_cfg.mak ./cfg.mak
+          cp configs/hi3798mv200/${{ inputs.set_chip_type }}_hi3798mv200_cfg.mak ./cfg.mak
           source ./env.sh
           make hiboot
           make linux -j4 2>&1  | tee -a buildlog.txt
-          cp /builder/mv200/out/hi3798mv200/hi3798mv2dmo/image/emmc_image/fastboot.bin /builder/fastboot_hi3798mv2dmo.bin
+          cp /builder/mv200/out/hi3798mv200/${{ inputs.set_chip_type }}/image/emmc_image/fastboot.bin /builder/fastboot_${{ inputs.set_chip_type }}.bin
           echo "status=success" >> ${GITHUB_OUTPUT}
       - name: Upload Kernel to Release
         id: tar
@@ -36,7 +56,7 @@ jobs:
         if: ${{ steps.build.outputs.status }} == 'success' && !cancelled()
         with:
           tag: mv200_kernel
-          artifacts: /builder/fastboot_hi3798mv2dmo.bin,/builder/mv200/out/hi3798mv200/hi3798mv2dmo/image/emmc_image/hi_kernel.bin
+          artifacts: /builder/fastboot_${{ inputs.set_chip_type }}.bin,/builder/mv200/out/hi3798mv200/${{ inputs.set_chip_type }}/image/emmc_image/hi_kernel.bin
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
