@@ -46,7 +46,7 @@ jobs:
           git clone -q --single-branch --depth=1 --branch=v2.x https://github.com/cndeep/HiSTBLinuxV100R005C00SPC050 mv200
           cd mv200
           cp configs/hi3798mv200/${{ inputs.set_chip_type }}_hi3798mv200_cfg.mak ./cfg.mak
-          cp configs/mv200.config source/kernel/linux-4.4.y/arch/arm64/configs/hi3798mv200_defconfig
+          cp configs/hi3798mv200/mv200.config source/kernel/linux-4.4.y/arch/arm64/configs/hi3798mv200_defconfig
           source ./env.sh
           make hiboot
           make linux -j4 2>&1  | tee -a buildlog.txt
