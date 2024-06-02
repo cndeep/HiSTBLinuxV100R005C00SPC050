@@ -14,6 +14,7 @@ on:
           - hi3798mv2dmb
           - hi3798mv2dmc
           - hi3798mv2dme
+          - hi3798mv2dmf
           - hi3798mv2dmg
           - hi3798mv2dmo
       set_arch_type:
