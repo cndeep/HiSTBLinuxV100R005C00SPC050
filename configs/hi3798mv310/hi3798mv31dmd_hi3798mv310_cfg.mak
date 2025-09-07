@@ -584,7 +584,7 @@ CFG_LINUX-4.4.y=y
 CFG_HI_KERNEL_VERSION=linux-4.4.y
 CFG_HI_KERNEL_CFG=hi3798mv310_defconfig
 # CFG_HI_FS_BUILDIN is not set
-CFG_HI_MSP_BUILDIN=y
+# CFG_HI_MSP_BUILDIN is not set
 
 #
 # Rootfs
