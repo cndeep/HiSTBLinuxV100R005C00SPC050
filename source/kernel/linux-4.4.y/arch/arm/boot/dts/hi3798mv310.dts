@@ -555,8 +555,7 @@
 
 			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
 			clock-names = "clk";
-			#status = "okay";
-            		status = "disabled";
+			status = "okay";
 		};
 
 		ohci:ohci@0xf9880000 {
@@ -566,8 +565,7 @@
 
 			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
 			clock-names = "clk";
-			#status = "okay";
-            		status = "disabled";
+			status = "okay";
 		};
 
 		udc:hiudc@0xf98c0000 {
