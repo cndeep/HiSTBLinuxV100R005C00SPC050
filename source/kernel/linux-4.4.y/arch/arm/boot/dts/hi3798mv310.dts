@@ -575,8 +575,7 @@
 
 			clocks = <&hisilicon_clock PERI_CRG46_USB2CTRL>;
 			clock-names = "clk";
-			#status = "okay";
-            		status = "disabled";
+			status = "okay";
 		};
 
 		otg:hi3798mv310.hiusbotg {
